@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::meta"></head>
+<body>
+  <div th:replace="common::header"></div>
+  <div class="container" th:fragment="container">
+    <h3>Books</h3>
+    <a href="/add" class="btn btn-success btn-sm">
+      <i class="glyphicon glyphicon-plus"></i>
+      Add book
+    </a>
+    <p th:if="${#lists.isEmpty(bookList)}">No books found</p>
+    <div class="media" th:unless="${#lists.isEmpty(bookList)}" th:each="book : ${bookList}" th:object="${book}">
+      <a th:href="@{'/read?id=' + *{id}}">
+        <div class="media-left">
+          <img alt="ahhh" th:src="*{imageUrl} != null ? *{imageUrl} : 'http://placekitten.com/g/128/192'">
+        </div>
+        <div class="media-body">
+          <h4 th:text="*{title}"></h4>
+          <p th:text="*{author}"></p>
+        </div>
+      </a>
+    </div>
+    <nav th:if="${cursor}">
+      <ul class="pager">
+        <li><a th:href="@{'?cursor=' + ${cursor}}">More</a></li>
+      </ul>
+    </nav>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::meta"></head>
+<body>
+  <div th:replace="common::header"></div>
+  <div class="container" th:object="${book}">
+    <h3>Book</h3>
+    <div class="btn-group">
+      <a th:href="@{'/edit?id=' + *{id}}" class="btn btn-primary btn-sm">
+        <i class="glyphicon glyphicon-edit"></i>
+        Edit book
+      </a>
+      <a th:href="@{'/delete?id=' + *{id}}" class="btn btn-danger btn-sm">
+        <i class="glyphicon glyphicon-trash"></i>
+        Delete book
+      </a>
+    </div>
+    <div class="media">
+      <div class="media-left">
+        <img class="book-image" th:src="*{imageUrl} != null ? *{imageUrl} : 'http://placekitten.com/g/128/192'">
+      </div>
+      <div class="media-body">
+        <h4 class="book-title" th:inline="text">
+          [[*{title}]]
+          <small>[[${#dates.format(book.publishedDate, 'yyyy-MM-dd')}]]</small>
+        </h4>
+        <h5 class="book-author" th:text="*{author}"></h5>
+        <p class="book-description" th:text="*{description}"></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
